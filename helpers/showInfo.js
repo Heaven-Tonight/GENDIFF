@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import parse from './parse.js';
+import genDiff from '../index.js';
 
 const program = new Command();
 
@@ -11,7 +11,8 @@ const showInfo = () => {
     .option('-V, --version ', 'output the version number')
     .option('-f, --format <type>', 'output format')
     .action((filepath1, filepath2) => {
-      parse(filepath1, filepath2);
+      const diff = genDiff(filepath1, filepath2);
+      console.log(diff);
     });
 
   program.parse();
