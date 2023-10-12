@@ -1,6 +1,6 @@
 import { test, expect } from '@jest/globals';
 import getFixturePath from '../helpers/path.js';
-import genDiff from '../index.js';
+import genDiff from '../diff.js';
 
 const files = [
   ['filepath1.json', 'filepath2.json'],
