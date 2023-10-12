@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import genDiff from '../index.js';
+import genDiff from '../diff.js';
 
 const program = new Command();
 
