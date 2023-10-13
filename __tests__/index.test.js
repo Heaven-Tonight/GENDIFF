@@ -2,8 +2,13 @@ import { test, expect } from '@jest/globals';
 import getFixturePath from '../helpers/path.js';
 import genDiff from '../diff.js';
 
-const files = [
+const jsonFiles = [
   ['filepath1.json', 'filepath2.json'],
+];
+
+const yamlFiles = [
+  ['filepath1.yml', 'filepath2.yml'],
+  ['filepath1.yaml', 'filepath2.yaml'],
 ];
 
 const expected = `{
@@ -15,8 +20,16 @@ const expected = `{
  + verbose: true
 }`;
 
-test('shows difference between two json files', () => {
-  files.forEach(([file1, file2]) => {
+test('json flat files diff', () => {
+  jsonFiles.forEach(([file1, file2]) => {
+    const filepath1 = getFixturePath(file1);
+    const filepath2 = getFixturePath(file2);
+    expect(genDiff(filepath1, filepath2)).toBe(expected);
+  });
+});
+
+test('yml flat files diff', () => {
+  yamlFiles.forEach(([file1, file2]) => {
     const filepath1 = getFixturePath(file1);
     const filepath2 = getFixturePath(file2);
     expect(genDiff(filepath1, filepath2)).toBe(expected);
