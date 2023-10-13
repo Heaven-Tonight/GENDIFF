@@ -20,18 +20,18 @@ const expected = `{
  + verbose: true
 }`;
 
-test('json flat files diff', () => {
-  jsonFiles.forEach(([file1, file2]) => {
+const checkFiles = (files) => {
+  files.forEach(([file1, file2]) => {
     const filepath1 = getFixturePath(file1);
     const filepath2 = getFixturePath(file2);
     expect(genDiff(filepath1, filepath2)).toBe(expected);
   });
+};
+
+test('json flat files diff', () => {
+  checkFiles(jsonFiles);
 });
 
 test('yml flat files diff', () => {
-  yamlFiles.forEach(([file1, file2]) => {
-    const filepath1 = getFixturePath(file1);
-    const filepath2 = getFixturePath(file2);
-    expect(genDiff(filepath1, filepath2)).toBe(expected);
-  });
+  checkFiles(yamlFiles);
 });
