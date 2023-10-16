@@ -7,7 +7,7 @@ const getDiff = (file1, file2) => {
     const value1 = file1[key];
     const value2 = file2[key];
     if (_.isObject(value1) && _.isObject(value2)) {
-      return { ...acc, [`${key}`]: getDiff(value1, value2) };
+      return { ...acc, [`  ${key}`]: getDiff(value1, value2) };
     } else {
       if (value2 === undefined) {
         return { ...acc, [`- ${key}`]: value1 };
