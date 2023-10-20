@@ -1,12 +1,12 @@
 const buildPath = (data, key) => {
-  const iter = (key, acc) => {
-    const [ parent ] = data[key];
+  const iter = (currentKey, path) => {
+    const [parent] = data[currentKey];
     if (parent === null) {
-      return `${key}${acc}`;
+      return `${currentKey}${path}`;
     }
     const currentParent = Object.keys(data).find((p) => p === parent);
-    return iter(currentParent, `.${key}${acc}`);
-  }
+    return iter(currentParent, `.${currentKey}${path}`);
+  };
   return iter(key, []);
 };
 
