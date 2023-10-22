@@ -1,12 +1,18 @@
-import { test, expect, beforeAll  } from '@jest/globals';
+import {
+  test,
+  expect,
+  beforeAll,
+  describe,
+} from '@jest/globals';
 import path from 'path';
 import fs from 'fs';
 import genDiff from '../diff.js';
-import getFixturePath from "../helpers/path.js";
+import getFixturePath from '../helpers/path.js';
 
 const getTestFixturePath = (filepath) => path.resolve(path.resolve(), '__fixtures__', filepath);
 
-const getFilesPaths = (files) => files.map(([file1, file2]) => [getFixturePath(file1), getFixturePath(file2)]);
+const getFilesPaths = (files) => files
+  .map(([file1, file2]) => [getFixturePath(file1), getFixturePath(file2)]);
 
 const files = [
   ['filepath1.json', 'filepath2.json'],
@@ -20,7 +26,7 @@ const formatCases = [
   'stylish',
   'plain',
   'json',
-  ];
+];
 
 const expectedData = {
   stylish: [],
@@ -28,7 +34,7 @@ const expectedData = {
   json: [],
 };
 
- beforeAll(() => {
+beforeAll(() => {
   const stylishData = fs.readFileSync(getTestFixturePath('stylish.txt'), 'utf-8');
   const plainData = fs.readFileSync(getTestFixturePath('plain.txt'), 'utf-8');
   const jsonData = fs.readFileSync(getTestFixturePath('json.txt'), 'utf-8');
@@ -37,19 +43,19 @@ const expectedData = {
   expectedData.json = jsonData.trim();
 });
 
- test('default formatter diff', () => {
-   const expected = expectedData.stylish;
-   filePathsList.forEach(([filepath1, filepath2]) => {
-     expect(genDiff(filepath1,filepath2)).toEqual(expected);
-   });
- });
+test('default formatter diff', () => {
+  const expected = expectedData.stylish;
+  filePathsList.forEach(([filepath1, filepath2]) => {
+    expect(genDiff(filepath1, filepath2)).toEqual(expected);
+  });
+});
 
- describe.each(formatCases)('formatters diff', (format) => {
-   test(`files formatted with ${format}`, () => {
-     const expected = expectedData[format];
-     filePathsList.forEach(([filepath1, filepath2]) => {
-       const actual = genDiff(filepath1, filepath2, format);
-       expect(actual).toEqual(expected);
-     });
-   });
- });
+describe.each(formatCases)('formatters diff', (format) => {
+  test(`files formatted with ${format}`, () => {
+    const expected = expectedData[format];
+    filePathsList.forEach(([filepath1, filepath2]) => {
+      const actual = genDiff(filepath1, filepath2, format);
+      expect(actual).toEqual(expected);
+    });
+  });
+});
