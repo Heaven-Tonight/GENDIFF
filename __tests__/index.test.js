@@ -1,73 +1,55 @@
-import { test, expect } from '@jest/globals';
-import getFixturePath from '../helpers/path.js';
+import { test, expect, beforeAll  } from '@jest/globals';
+import path from 'path';
+import fs from 'fs';
 import genDiff from '../diff.js';
+import getFixturePath from "../helpers/path.js";
 
-const jsonFiles = [
+const getTestFixturePath = (filepath) => path.resolve(path.resolve(), '__fixtures__', filepath);
+
+const getFilesPaths = (files) => files.map(([file1, file2]) => [getFixturePath(file1), getFixturePath(file2)]);
+
+const files = [
   ['filepath1.json', 'filepath2.json'],
-];
-
-const yamlFiles = [
   ['filepath1.yml', 'filepath2.yml'],
   ['filepath1.yaml', 'filepath2.yaml'],
 ];
 
-const expected = `{
-    common: {
-      + follow: false
-        setting1: Value 1
-      - setting2: 200
-      - setting3: true
-      + setting3: null
-      + setting4: blah blah
-      + setting5: {
-            key5: value5
-        }
-        setting6: {
-            doge: {
-              - wow: 
-              + wow: so much
-            }
-            key: value
-          + ops: vops
-        }
-    }
-    group1: {
-      - baz: bas
-      + baz: bars
-        foo: bar
-      - nest: {
-            key: value
-        }
-      + nest: str
-    }
-  - group2: {
-        abc: 12345
-        deep: {
-            id: 45
-        }
-    }
-  + group3: {
-        deep: {
-            id: {
-                number: 45
-            }
-        }
-        fee: 100500
-    }
-}`;
+const filePathsList = getFilesPaths(files);
 
-const checkFiles = (files) => {
-  files.forEach(([file1, file2]) => {
-    const filepath1 = getFixturePath(file1);
-    const filepath2 = getFixturePath(file2);
-    expect(genDiff(filepath1, filepath2)).toBe(expected);
-  });
+const formatCases = [
+  'stylish',
+  'plain',
+  'json',
+  ];
+
+const expectedData = {
+  stylish: [],
+  plain: [],
+  json: [],
 };
 
-test('json flat files diff', () => {
-  checkFiles(jsonFiles);
+ beforeAll(() => {
+  const stylishData = fs.readFileSync(getTestFixturePath('stylish.txt'), 'utf-8');
+  const plainData = fs.readFileSync(getTestFixturePath('plain.txt'), 'utf-8');
+  const jsonData = fs.readFileSync(getTestFixturePath('json.txt'), 'utf-8');
+  expectedData.plain = plainData.trim();
+  expectedData.stylish = stylishData.trim();
+  expectedData.json = jsonData.trim();
 });
 
-test('yml flat files diff', () => {
-  checkFiles(yamlFiles);
-});
+ test('default formatter diff', () => {
+   const expected = expectedData.stylish;
+   filePathsList.forEach(([filepath1, filepath2]) => {
+     expect(genDiff(filepath1,filepath2)).toEqual(expected);
+   });
+ });
+
+ describe.each(formatCases)('formatters diff', (format) => {
+   test(`files formatted with ${format}`, () => {
+     const expected = expectedData[format];
+     filePathsList.forEach(([filepath1, filepath2]) => {
+       const actual = genDiff(filepath1, filepath2, format);
+       expect(actual).toEqual(expected);
+     });
+   });
+ });
