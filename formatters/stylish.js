@@ -31,8 +31,6 @@ const helper = (data) => {
   }, {});
 };
 
-const stylish = (data) => {
-  return stringify(helper(data));
-};
+const stylish = (data) => stringify(helper(data));
 
 export default stylish;
