@@ -19,7 +19,8 @@ const stringify = (data) => {
       }
       return `${replacerString}${key}: {\n${iter(value, depth + 1)}\n${bracketIndent}}`;
     });
-    return strings.join('\n');
+    const string = strings.join('\n');
+    return string;
   };
   const string = iter(data, 1);
   return `{\n${string}\n}`;

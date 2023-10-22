@@ -1,9 +1,9 @@
 import stringify from './stringify.js';
 
-const stylish = (data) => {
+const helper = (data) => {
   const items = Object.keys(data);
 
-  const result = items.reduce((acc, key) => {
+  return items.reduce((acc, key) => {
     const { children = [], status } = data[key];
     if (children.length === 0) {
       const { value } = data[key];
@@ -27,9 +27,12 @@ const stylish = (data) => {
         default: return `Unexpected status - ${status}`;
       }
     }
-    return { ...acc, [key]: children.flatMap((item) => stylish(item))[0] };
+    return { ...acc, [key]: children.map((item) => helper(item))[0] };
   }, {});
-  return stringify(result);
+};
+
+const stylish = (data) => {
+  return stringify(helper(data));
 };
 
 export default stylish;
