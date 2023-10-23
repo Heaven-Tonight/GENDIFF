@@ -9,7 +9,7 @@ import fs from 'fs';
 import genDiff from '../diff.js';
 import getFixturePath from '../helpers/path.js';
 
-const getTestFixturePath = (filepath) => path.resolve(path.resolve(), '__fixtures__', filepath);
+const getTestFixturePath = (filepath) => path.join(process.cwd(), '__fixtures__', filepath);
 
 const getFilesPaths = (files) => files
   .map(([file1, file2]) => [getFixturePath(file1), getFixturePath(file2)]);
