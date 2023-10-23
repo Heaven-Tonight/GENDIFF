@@ -4,14 +4,16 @@ import {
   beforeAll,
   describe,
 } from '@jest/globals';
+import { fileURLToPath } from 'url';
 import path from 'path';
 import fs from 'fs';
 import genDiff from '../diff.js';
 
 const getFixturePath = (file) => {
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const ext = path.extname(file);
   const basename = path.basename(file, ext);
-  return path.join(process.cwd(), '.', '__fixtures__', `${ext.slice(1)}`, `file${basename.slice(-1)}${ext}`);
+  return path.join(__dirname, '..', '__fixtures__', `${ext.slice(1)}`, `file${basename.slice(-1)}${ext}`);
 };
 
 const getTestFixturePath = (filepath) => path.join(process.cwd(), '__fixtures__', filepath);
