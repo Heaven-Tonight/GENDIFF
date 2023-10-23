@@ -1,20 +1,22 @@
-#GENDIFF.JS
+# GENDIFF.JS
+
 compares two configuration files and shows a difference
 
-##Features:
+## Features:
 - supports json / yml configuration files formats
 - shows result in stylish / plain / json formats
 
-##Installation
-####Clone project:
+## Installation
+
+#### Clone project:
 ```git clone https://github.com/Heaven-Tonight/frontend-project-46.git```
 
-####Install packages:
+#### Install packages:
 ```
 npm install
 npm link
 ```
-####How to use:
+#### How to use:
 ```
  Usage: gendiff [options] <filepath1> <filepath2>
 
@@ -25,10 +27,10 @@ npm link
   -f, --format </type>  output format (default: "stylish")
   -h, --help            output usage information
    ```
-####default (stylish) format difference:
+#### default (stylish) format difference:
 [![asciicast](https://asciinema.org/a/ydB9IQJ18OSro1Nr9he1ZhFt9.svg)](https://asciinema.org/a/ydB9IQJ18OSro1Nr9he1ZhFt9)
 
-####plain / json formats difference:
+#### plain / json formats difference:
 [![asciicast](https://asciinema.org/a/w83hv23o2pCOL43iM0zhesO7m.svg)](https://asciinema.org/a/w83hv23o2pCOL43iM0zhesO7m)
 
 ### Hexlet tests and linter status:
