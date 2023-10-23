@@ -9,7 +9,9 @@ compares two configuration files and shows a difference
 ## Installation
 
 #### Clone project:
-```git clone https://github.com/Heaven-Tonight/frontend-project-46.git```
+```
+git clone https://github.com/Heaven-Tonight/frontend-project-46.git
+```
 
 #### Install packages:
 ```
