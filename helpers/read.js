@@ -11,7 +11,6 @@ const getFixturePath = (file) => {
 
 const readFile = (file) => {
   const filepath = getFixturePath(file);
-  console.log(readFileSync(filepath, 'utf-8'))
   return readFileSync(filepath, 'utf-8');
 };
 
