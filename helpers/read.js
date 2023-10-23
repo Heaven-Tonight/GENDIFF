@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import path from "path";
+import path from 'path';
 
 const getFixturePath = (file) => {
   const ext = path.extname(file);
