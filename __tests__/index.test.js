@@ -38,19 +38,19 @@ beforeAll(() => {
   const stylishData = fs.readFileSync(getTestFixturePath('stylish.txt'), 'utf-8');
   const plainData = fs.readFileSync(getTestFixturePath('plain.txt'), 'utf-8');
   const jsonData = fs.readFileSync(getTestFixturePath('json.txt'), 'utf-8');
-  expectedData.plain = plainData.trim();
   expectedData.stylish = stylishData.trim();
+  expectedData.plain = plainData.trim();
   expectedData.json = jsonData.trim();
 });
 
-test('default formatter diff', () => {
+test('gendiff - default formatter', () => {
   const expected = expectedData.stylish;
   filePathsList.forEach(([filepath1, filepath2]) => {
     expect(genDiff(filepath1, filepath2)).toEqual(expected);
   });
 });
 
-describe.each(formatCases)('formatters diff', (format) => {
+describe.each(formatCases)('gendiff - formatters', (format) => {
   test(`files formatted with ${format}`, () => {
     const expected = expectedData[format];
     filePathsList.forEach(([filepath1, filepath2]) => {
