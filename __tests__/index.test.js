@@ -7,12 +7,18 @@ import {
 import path from 'path';
 import fs from 'fs';
 import genDiff from '../diff.js';
-import getFixturePath from '../helpers/path.js';
+
+const getFixturePath = (file) => {
+  const ext = path.extname(file);
+  const basename = path.basename(file, ext);
+  return path.join(process.cwd(), './', '__fixtures__', `${ext.slice(1)}`, `file${basename.slice(-1)}${ext}`);
+}
 
 const getTestFixturePath = (filepath) => path.join(process.cwd(), '__fixtures__', filepath);
 
 const getFilesPaths = (files) => files
   .map(([file1, file2]) => [getFixturePath(file1), getFixturePath(file2)]);
+
 
 const files = [
   ['filepath1.json', 'filepath2.json'],
@@ -21,7 +27,7 @@ const files = [
 ];
 
 const filePathsList = getFilesPaths(files);
-
+console.log(filePathsList)
 const formatCases = [
   'stylish',
   'plain',
