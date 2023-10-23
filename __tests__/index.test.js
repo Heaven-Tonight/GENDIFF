@@ -13,7 +13,7 @@ const getFixturePath = (file) => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const ext = path.extname(file);
   const basename = path.basename(file, ext);
-  return path.join(__dirname, '..', '__fixtures__', `${ext.slice(1)}`, `file${basename.slice(-1)}${ext}`);
+  return path.join(__dirname, '..', '__fixtures__', `file${basename.slice(-1)}${ext}`);
 };
 
 const getTestFixturePath = (filepath) => path.join(process.cwd(), '__fixtures__', filepath);
