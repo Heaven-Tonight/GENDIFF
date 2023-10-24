@@ -3,13 +3,15 @@ import buildPath from '../graphs/path.js';
 
 const formatValue = (value) => {
   if (Array.isArray(value)) {
-    return value
-      .map((item) => (typeof item === 'object' && item !== null ? '[complex value]' : `'${item}'`));
+    return value.map((val) => formatValue(val));
+  }
+  if (value === null) {
+    return null;
   }
   if (typeof value === 'object') {
     return '[complex value]';
   }
-  if (typeof value === 'string' || value === null) {
+  if (typeof value === 'string') {
     return `'${value}'`;
   }
   return value;
