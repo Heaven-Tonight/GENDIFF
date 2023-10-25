@@ -35,11 +35,7 @@ const formatCases = [
   'json',
 ];
 
-const expectedData = {
-  stylish: [],
-  plain: [],
-  json: [],
-};
+const expectedData = {};
 
 beforeAll(() => {
   const stylishData = fs.readFileSync(getTestFixturePath('stylish.txt'), 'utf-8');
