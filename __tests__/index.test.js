@@ -35,19 +35,21 @@ const formatCases = [
   'json',
 ];
 
-const expectedData = {};
+const expectedData = [];
 
 beforeAll(() => {
   const stylishData = fs.readFileSync(getTestFixturePath('stylish.txt'), 'utf-8');
   const plainData = fs.readFileSync(getTestFixturePath('plain.txt'), 'utf-8');
   const jsonData = fs.readFileSync(getTestFixturePath('json.txt'), 'utf-8');
-  expectedData.stylish = stylishData.trim();
-  expectedData.plain = plainData.trim();
-  expectedData.json = jsonData.trim();
+  expectedData.push({
+    stylish: stylishData.trim(),
+    plain: plainData.trim(),
+    json: jsonData.trim(),
+  });
 });
 
 test('gendiff - default formatter', () => {
-  const expected = expectedData.stylish;
+  const expected = expectedData[0].stylish;
   filePathsList.forEach(([filepath1, filepath2]) => {
     expect(genDiff(filepath1, filepath2)).toEqual(expected);
   });
@@ -55,7 +57,7 @@ test('gendiff - default formatter', () => {
 
 describe.each(formatCases)('gendiff - formatters', (format) => {
   test(`files formatted with ${format}`, () => {
-    const expected = expectedData[format];
+    const expected = expectedData[0][format];
     filePathsList.forEach(([filepath1, filepath2]) => {
       const actual = genDiff(filepath1, filepath2, format);
       expect(actual).toEqual(expected);
