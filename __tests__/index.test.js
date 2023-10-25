@@ -1,12 +1,12 @@
 import {
   test,
   expect,
-  beforeAll,
   describe,
 } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import fs from 'fs';
+import read from '../helpers/read.js';
+
 import genDiff from '../diff.js';
 
 const getFixturePath = (file) => {
@@ -35,21 +35,14 @@ const formatCases = [
   'json',
 ];
 
-const expectedData = [];
-
-beforeAll(() => {
-  const stylishData = fs.readFileSync(getTestFixturePath('stylish.txt'), 'utf-8');
-  const plainData = fs.readFileSync(getTestFixturePath('plain.txt'), 'utf-8');
-  const jsonData = fs.readFileSync(getTestFixturePath('json.txt'), 'utf-8');
-  expectedData.push({
-    stylish: stylishData.trim(),
-    plain: plainData.trim(),
-    json: jsonData.trim(),
-  });
-});
+const expectedData = {
+  stylish: read(getTestFixturePath('stylish.txt')),
+  plain: read(getTestFixturePath('plain.txt')),
+  json: read(getTestFixturePath('json.txt')),
+};
 
 test('gendiff - default formatter', () => {
-  const expected = expectedData[0].stylish;
+  const expected = expectedData.stylish;
   filePathsList.forEach(([filepath1, filepath2]) => {
     expect(genDiff(filepath1, filepath2)).toEqual(expected);
   });
@@ -57,7 +50,7 @@ test('gendiff - default formatter', () => {
 
 describe.each(formatCases)('gendiff - formatters', (format) => {
   test(`files formatted with ${format}`, () => {
-    const expected = expectedData[0][format];
+    const expected = expectedData[format];
     filePathsList.forEach(([filepath1, filepath2]) => {
       const actual = genDiff(filepath1, filepath2, format);
       expect(actual).toEqual(expected);
