@@ -1,4 +1,4 @@
-# GENDIFF
+<h1 align="center"> GENDIFF </h1>
 
 compares two configuration files and shows a difference
 
