@@ -1,4 +1,4 @@
-# GENDIFF.JS
+# GENDIFF
 
 compares two configuration files and shows a difference
 
