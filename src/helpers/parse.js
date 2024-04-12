@@ -1,11 +1,11 @@
 import yaml from 'js-yaml';
 
-const map = {
+const parsers = {
   '.json': (data) => JSON.parse(data),
   '.yml': (data) => yaml.load(data),
   '.yaml': (data) => yaml.load(data),
 };
 
-const parse = (data, ext) => map[ext](data);
+const parse = (data, ext) => parsers[ext](data);
 
 export default parse;

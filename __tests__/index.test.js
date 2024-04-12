@@ -5,21 +5,21 @@ import {
 } from '@jest/globals';
 import { fileURLToPath } from 'url';
 import path from 'path';
-import read from '../helpers/read.js';
 
-import genDiff from '../diff.js';
+import read from '../src/helpers/read.js';
+import genDiff from '../src/index.js';
 
-const getFixturePath = (file) => {
+const getTestFilePath = (file) => {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
   const ext = path.extname(file);
   const basename = path.basename(file, ext);
   return path.join(__dirname, '..', '__fixtures__', `file${basename.slice(-1)}${ext}`);
 };
 
-const getTestFixturePath = (filepath) => path.join(process.cwd(), '__fixtures__', filepath);
+const getFixturePath = (filepath) => path.join(process.cwd(), '__fixtures__', filepath);
 
 const getFilesPaths = (files) => files
-  .map(([file1, file2]) => [getFixturePath(file1), getFixturePath(file2)]);
+  .map(([file1, file2]) => [getTestFilePath(file1), getTestFilePath(file2)]);
 
 const files = [
   ['filepath1.json', 'filepath2.json'],
@@ -29,16 +29,12 @@ const files = [
 
 const filePathsList = getFilesPaths(files);
 
-const formatCases = [
-  'stylish',
-  'plain',
-  'json',
-];
+const formats = ['stylish', 'plain', 'json'];
 
 const expectedData = {
-  stylish: read(getTestFixturePath('stylish.txt')),
-  plain: read(getTestFixturePath('plain.txt')),
-  json: read(getTestFixturePath('json.txt')),
+  stylish: read(getFixturePath('stylish.txt')),
+  plain: read(getFixturePath('plain.txt')),
+  json: read(getFixturePath('json.txt')),
 };
 
 test('gendiff - default formatter', () => {
@@ -48,7 +44,7 @@ test('gendiff - default formatter', () => {
   });
 });
 
-describe.each(formatCases)('gendiff - formatters', (format) => {
+describe.each(formats)('gendiff - formatters', (format) => {
   test(`files formatted with ${format}`, () => {
     const expected = expectedData[format];
     filePathsList.forEach(([filepath1, filepath2]) => {

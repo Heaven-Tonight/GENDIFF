@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-import showInfo from '../helpers/showInfo.js';
+import cli from '../src/helpers/cli.js';
 
-showInfo();
+cli();
