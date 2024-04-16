@@ -1,5 +1,5 @@
 #!/usr/bin/env node
 
-import cli from '../src/helpers/cli.js';
+import cli from './cli.js';
 
 cli();

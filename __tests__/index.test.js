@@ -6,7 +6,7 @@ import {
 import { fileURLToPath } from 'url';
 import path from 'path';
 
-import read from '../src/helpers/read.js';
+import read from '../src/read.js';
 import genDiff from '../src/index.js';
 
 const getTestFilePath = (file) => {
@@ -32,9 +32,9 @@ const filePathsList = getFilesPaths(files);
 const formats = ['stylish', 'plain', 'json'];
 
 const expectedData = {
-  stylish: read(getFixturePath('stylish.txt')),
-  plain: read(getFixturePath('plain.txt')),
-  json: read(getFixturePath('json.txt')),
+  stylish: read(getFixturePath('stylish.txt')).trim(),
+  plain: read(getFixturePath('plain.txt')).trim(),
+  json: read(getFixturePath('json.txt')).trim(),
 };
 
 test('gendiff - default formatter', () => {

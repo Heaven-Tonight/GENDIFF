@@ -1,9 +1,9 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import compareObjects from './helpers/diff.js';
-import readFile from './helpers/read.js';
-import parse from './helpers/parse.js';
+import compareObjects from './compareObjects.js';
+import readFile from './read.js';
+import parse from './parsers.js';
 import formatters from './formatters/index.js';
 
 const getFilePath = (filepath) => {
@@ -11,12 +11,12 @@ const getFilePath = (filepath) => {
   return path.resolve(__dirname, filepath);
 };
 
-const genDiff = (filepath1, filepath2, format = 'stylish') => {
-  const data1 = readFile(getFilePath(filepath1));
-  const data2 = readFile(getFilePath(filepath2));
+const genDiff = (parsedData1, parsedData2, format = 'stylish') => {
+  const data1 = readFile(getFilePath(parsedData1));
+  const data2 = readFile(getFilePath(parsedData2));
 
-  const ext1 = path.extname(filepath1);
-  const ext2 = path.extname(filepath2);
+  const ext1 = path.extname(parsedData1);
+  const ext2 = path.extname(parsedData2);
 
   const parsed1 = parse(data1, ext1);
   const parsed2 = parse(data2, ext2);
