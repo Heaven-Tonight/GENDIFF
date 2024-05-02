@@ -1,5 +1,8 @@
-const formatPlainValue = (value) => {
+const formatPlainValue = (value, status) => {
   if (Array.isArray(value)) {
+    if (status !== 'changed') {
+      return '[complex value]';
+    }
     return value.map(formatPlainValue);
   }
   if (value === null) {
@@ -21,8 +24,9 @@ const generatePlainMessages = (data, path) => data
     status,
     children = [],
   }) => {
-    const formattedValue = formatPlainValue(value);
+    const formattedValue = formatPlainValue(value, status);
     const propertyPath = [...path, key].join('.');
+
     switch (status) {
       case 'removed':
         return `Property '${propertyPath}' was removed`;

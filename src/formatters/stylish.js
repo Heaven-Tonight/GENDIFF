@@ -27,6 +27,13 @@ const stringify = (data) => {
   return iter(data, 1);
 };
 
+const stringifyValueIfArray = (value) => {
+  if (Array.isArray(value)) {
+    return JSON.stringify(value);
+  }
+  return value;
+};
+
 const generateStylishMessages = (data) => data
   .flatMap(({
     key,
@@ -36,19 +43,19 @@ const generateStylishMessages = (data) => data
   }) => {
     switch (status) {
       case 'removed': {
-        return { [`- ${key}`]: value };
+        return { [`- ${key}`]: stringifyValueIfArray(value) };
       }
       case 'added': {
-        return { [`+ ${key}`]: value };
+        return { [`+ ${key}`]: stringifyValueIfArray(value) };
       }
       case 'changed': {
         return {
-          [`- ${key}`]: value[0],
-          [`+ ${key}`]: value[1],
+          [`- ${key}`]: stringifyValueIfArray(value[0]),
+          [`+ ${key}`]: stringifyValueIfArray(value[1]),
         };
       }
       case 'unchanged': {
-        return { [`  ${key}`]: value };
+        return { [`  ${key}`]: stringifyValueIfArray(value) };
       }
       default: {
         return { [key]: generateStylishMessages(children) };
