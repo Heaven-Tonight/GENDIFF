@@ -10,7 +10,7 @@ compares two configuration files and shows a difference
 
 #### Clone project:
 ```
-git clone https://github.com/Heaven-Tonight/GENDIFF.git
+git clone https://github.com/mad-chameleon/gendiff.git
 ```
 
 #### Install packages:
